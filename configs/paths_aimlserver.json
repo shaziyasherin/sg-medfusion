@@ -1,0 +1,20 @@
+{
+  "dataset": "eicu",
+  "split_mode": "hospital",
+  "paths": {
+    "eicu_dir": "D:/sgmedfusion/data/eicu_demo",
+    "ukdale_dir": "D:/sgmedfusion/data/ukdale",
+    "work_dir": "D:/sgmedfusion/work",
+    "results_dir": "D:/sgmedfusion/results"
+  },
+  "households": {
+    "train": ["ukdale_1", "ukdale_2"],
+    "val": ["ukdale_3"],
+    "test": ["ukdale_4", "ukdale_5"]
+  },
+  "windows_per_stay": 16,
+  "n_sites": 4,
+  "mia_frac": 0.1,
+  "fl": {"rounds": 20, "local_epochs": 2, "patients_per_step": 96, "lr": 0.002},
+  "device": "cuda"
+}
