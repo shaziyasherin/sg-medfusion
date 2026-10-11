@@ -2,7 +2,7 @@
 
 Code for the article:
 
-> Johar S, Ganavi M, Banu S S. *SG-MedFusion: Federated Cross-Modal Consistency Checking of Medical-Device Power Signatures and EHR Documentation — A Proof-of-Concept Study with a Patient-Level Privacy Analysis.* Intelligence-Based Medicine (revised manuscript IBMED-D-26-00504).
+> *SG-MedFusion: Federated Cross-Modal Consistency Checking of Medical-Device Power Signatures and EHR Documentation — A Proof-of-Concept Study with a Patient-Level Privacy Analysis.* Intelligence-Based Medicine (revised manuscript IBMED-D-26-00504).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23186964.svg)](https://doi.org/10.5281/zenodo.23186964)
 
