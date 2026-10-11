@@ -2,7 +2,7 @@
 
 Code for the article:
 
-> *SG-MedFusion: Federated Cross-Modal Consistency Checking of Medical-Device Power Signatures and EHR Documentation — A Proof-of-Concept Study with a Patient-Level Privacy Analysis.* Intelligence-Based Medicine (revised manuscript IBMED-D-26-00504).
+> Johar S, Ganavi M, Banu S S. *SG-MedFusion: A Proof-of-Concept Study of Federated Cross-Modal Consistency Checking between Medical-Device Power Signatures and EHR Documentation, with a Patient-Level Privacy Analysis.* Intelligence-Based Medicine (revised manuscript IBMED-D-26-00504).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23186964.svg)](https://doi.org/10.5281/zenodo.23186964)
 
@@ -46,7 +46,8 @@ python scripts/download_ukdale.py --out data/ukdale
 python scripts/run_all.py --config configs/paths_aimlserver.json --stage extract
 python scripts/run_all.py --config configs/paths_aimlserver.json --stage run --plan minimal --seeds 0 1 2
 python scripts/make_report.py configs/paths_aimlserver.json       # tables.md + figures/
-python scripts/paper_tables.py <results_dir> <out_dir>            # manuscript Tables 6-11, S1-S8
+python scripts/paper_tables.py <results_dir> <out_dir>            # manuscript Tables VI-XI, S1-S8
+python scripts/paper_figures.py --results <results_dir> --out <results_dir>/figures   # manuscript Figs. 3-8
 ```
 
 On Windows, the batch files in `aimlserver/` (STEP1 to STEP6) run the same steps.
