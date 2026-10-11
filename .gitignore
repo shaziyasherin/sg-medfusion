@@ -1,0 +1,15 @@
+# Never publish data or anything derived from MIMIC-IV (PhysioNet DUA)
+work/
+work_*/
+results/
+results_*/
+data/
+logs/
+*.pkl
+*.npz
+*.csv
+*.csv.gz
+*.dat
+paths.json
+__pycache__/
+*.pyc

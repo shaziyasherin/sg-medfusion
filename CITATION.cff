@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article and the data sources (eICU-CRD Demo, UK-DALE, PhysioNet)."
+title: "SG-MedFusion: reproducibility code for federated power-EHR consistency checking with a patient-level privacy analysis"
+version: "1.0.0"
+date-released: "2026-10-06"
+license: MIT
+doi: "10.5281/zenodo.23186964"
+authors:
+  - family-names: Johar
+    given-names: Sayyed
+    affiliation: "Jawaharlal Nehru New College of Engineering (JNNCE), Shivamogga, India"
+  - family-names: M
+    given-names: Ganavi
+    affiliation: "Jawaharlal Nehru New College of Engineering (JNNCE), Shivamogga, India"
+  - family-names: Banu S
+    given-names: Shaziya
+    affiliation: "Jawaharlal Nehru New College of Engineering (JNNCE), Shivamogga, India"
+repository-code: "https://github.com/shaziyasherin/sg-medfusion"
+keywords:
+  - federated learning
+  - differential privacy
+  - electronic health records
+  - non-intrusive load monitoring
+  - documentation integrity
