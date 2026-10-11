@@ -1,4 +1,4 @@
-"""Build the manuscript's results tables (main text: Tables 6-11) and the
+"""Build the manuscript's results tables (main text: Tables VI-XI) and the
 supplementary tables (S1-S8) directly from results/*/seed*.json, in compact
 form for Word.  Output: two Markdown fragments included by the manuscript build.
 
@@ -65,12 +65,12 @@ main_e = ["sgmf_nodp", "fedprox_nodp", "concat_nodp", "gbm_both", "lr_both",
           "sgmf_eps16", "sgmf_eps8", "sgmf_eps4", "sgmf_eps1"]
 dl = holm_vs_ref(main_e)
 M = ["## Results tables (main text)"]
-M += tab("Table 6. Test performance at 37 held-out hospitals (three runs, mean ± SD; 95% t-interval for AUROC).",
+M += tab("Table VI. Test performance at 37 held-out hospitals (three runs, mean ± SD; 95% t-interval for AUROC).",
          ["Model", "AUROC", "AUPRC", "FPR at 95% TPR", "Δ AUROC vs. no-DP model (Holm)"],
          [[N[e], c(e, "test.main.auroc", ci=True), c(e, "test.main.auprc"), c(e, "test.main.fpr_at_tpr95"),
            "—" if e == "sgmf_nodp" else dl.get(e, "—")] for e in main_e if e in runs],
          "Paired t-tests over the three runs with Holm correction; with three runs these tests have little power.")
-M += tab("Table 7. Operating point: threshold calibrated to a 5% false-alarm rate on the validation hospitals.",
+M += tab("Table VII. Operating point: threshold calibrated to a 5% false-alarm rate on the validation hospitals.",
          ["Model", "Detection rate", "False-alarm rate", "Precision (50% prev.)", "PPV, 5% prev.", "PPV, 1% prev."],
          [[N[e], c(e, "test_at_val_fpr.recall"), c(e, "test_at_val_fpr.fpr"), c(e, "test_at_val_fpr.precision"),
            m([ppv(0.05, r["test_at_val_fpr"]["recall"], r["test_at_val_fpr"]["fpr"]) for r in runs[e]]),
@@ -79,24 +79,24 @@ M += tab("Table 7. Operating point: threshold calibrated to a 5% false-alarm rat
 tr = type_rates_at(root, "sgmf_nodp", runs)
 lab = {"consistent": "Consistent (false alarms)", "fabricate": "Fabricated entry", "omit": "Omitted entry",
        "shift": "Shifted in time", "wrong_patient": "Wrong patient"}
-M += tab("Table 8. Flag rate by pair type, federated SG-MedFusion without DP, 5% false-alarm threshold.",
+M += tab("Table VIII. Flag rate by pair type, federated SG-MedFusion without DP, 5% false-alarm threshold.",
          ["Pair type", "Test pairs (run 0)", "Flag rate"],
          [[lab[t], runs["sgmf_nodp"][0]["test"]["by_type"][t]["n"], m(v)] for t, v in sorted(tr.items())]
          + [["All pairs: AUROC", runs["sgmf_nodp"][0]["test"]["n"], c("sgmf_nodp", "test.main.auroc")],
             ["Physically distinguishable pairs only: AUROC", runs["sgmf_nodp"][0]["test"]["distinguishable_only"]["n"],
              c("sgmf_nodp", "test.distinguishable_only.auroc")]],
          "About 21% of shift and wrong-patient pairs were physically distinguishable; fabricated and omitted entries always are.")
-M += tab("Table 9. Ablation without DP.", ["Variant", "Parameters", "AUROC", "Δ AUROC (Holm)"],
+M += tab("Table X. Ablation without DP.", ["Variant", "Parameters", "AUROC", "Δ AUROC (Holm)"],
          [[N[e], runs[e][0].get("n_params", "—"), c(e, "test.main.auroc", ci=True),
            "—" if e == "sgmf_nodp" else holm_vs_ref(["abl_no_cycle_nodp", "concat_nodp"])[e]]
           for e in ["sgmf_nodp", "abl_no_cycle_nodp", "concat_nodp"] if e in runs])
-M += tab("Table 10. Robustness to one malicious site of four (sign-flipped updates ×5), no DP.",
+M += tab("Table XI. Robustness to one malicious site of four (sign-flipped updates ×5), no DP.",
          ["Setting", "Aggregation", "AUROC", "F1"],
          [["No attack", "FedAvg", c("sgmf_nodp", "test.main.auroc"), c("sgmf_nodp", "test.main.f1")],
           ["Attack", "FedAvg", c("atk1_signflip_fedavg_nodp", "test.main.auroc"), c("atk1_signflip_fedavg_nodp", "test.main.f1")],
           ["Attack", "Trimmed mean (b = 1)", c("atk1_signflip_trim_nodp", "test.main.auroc"), c("atk1_signflip_trim_nodp", "test.main.f1")]])
 pr = ["sgmf_eps1", "sgmf_eps4", "sgmf_eps8", "sgmf_eps16", "sgmf_nodp"]
-M += tab("Table 11. Patient-level privacy: utility and membership inference (δ = 10⁻⁵).",
+M += tab("Table IX. Patient-level privacy: utility and membership inference (δ = 10⁻⁵).",
          ["Setting", "Achieved ε", "Noise multiplier σ", "AUROC", "Detection at 5% FPR", "MIA AUC", "MIA TPR at 1% FPR"],
          [[N[e], ("%.2f" % max(r["privacy"]["eps_max"] for r in runs[e])) if runs[e][0]["privacy"]["enabled"] else "—",
            ("%.2f–%.2f" % (min(runs[e][0]["privacy"]["sigma"].values()), max(runs[e][0]["privacy"]["sigma"].values())))
@@ -154,8 +154,6 @@ Sx += tab("Table S8. Computing environment.", ["Component", "Version"],
           [["GPU", "%s (%s GB)" % (env.get("gpu"), env.get("gpu_mem_gb"))], ["CUDA", env.get("cuda")],
            ["Python", env["python"]], ["PyTorch", env["torch"]], ["NumPy", env["numpy"]], ["scikit-learn", env["sklearn"]],
            ["Operating system", env["os"]]])
-Sx += ["", "![](%s){width=80%%}" % (root / "figures" / "fig_convergence.png").as_posix(), "",
-       "**Supplementary Fig. S1.** Validation AUROC over communication rounds (mean ± SD over three runs)."]
 (out / "results_tables.md").write_text("\n".join(M) + "\n", encoding="utf-8")
 (out / "supplementary.md").write_text("\n".join(Sx) + "\n", encoding="utf-8")
 print("wrote", out / "results_tables.md", "and", out / "supplementary.md")
